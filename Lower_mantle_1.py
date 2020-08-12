@@ -16,9 +16,9 @@ def runkut(n, x, y, h):
     k3=derivs(n, x+0.5*h, y)
     for i in range(1,n+1): y[i]=y0[i]-h*(0.7071067811*k2[i]-1.7071067811*k3[i])
     k4=derivs(n, x+h, y)
-    for i in range(1,n+1):1
-    a=k1[i]+0.5857864376*k2[i]+3.4142135623*k3[i]+k4[i]
-    y[i]=y0[i]+0.16666666667*h*a
+    for i in range(1,n+1):
+        a=k1[i]+0.5857864376*k2[i]+3.4142135623*k3[i]+k4[i]
+        y[i]=y0[i]+0.16666666667*h*a
 	
     x+=h
     return (x,y)
