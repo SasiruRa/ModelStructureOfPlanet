@@ -209,7 +209,7 @@ q_i = 0.0000001
 x=0.000001; y=[0.0, p, 0.0, 0.0, T, q_i]   # Sets Boundary Conditions
 
 
-while y[2] < 1.080e+24:
+while y[2] < 1.08000e+24:
     (x,y) = runkut(5, x, y, 1.0/N)
          
     print("mass is", y[2], "Kg") 
