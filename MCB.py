@@ -36,13 +36,14 @@ gamma_0 = [1.584, 0.996]
 beta = 2.382
 
 
-p_ini = 5.0      # Initial pressure at the core-mantle boundary (Pcmb at r_cmb)
-T_ini = 1766.37    # Initial temperature at the core-mantle boundary (Tcmb at r_cmb)
-m_ini = 7.37059856383e+24
-density = 3542.82
-g_ini = 12.04
-r_ini = 6390.30
-q_ini = 0.00106
+p_ini = 4.99847062478379
+T_ini = 1429.6115466032954
+m_ini = 6.003254383242641e+24
+density = 3550.5452160847904
+g_ini = 10.491646036886415
+r_ini = 6179.800001004952
+q_ini = 0.0009893268379638173
+
 
 T_0 = 300.0 # Reference temperature in kelvins
 n0 = 1.0
@@ -50,7 +51,7 @@ R = 8.314
 epsilon = 7.38 * (10**(-11))
 
 density = []
-kappa = 8.000
+kappa = 7.000
 
 
 def integrate(f, a, b, n):
@@ -158,7 +159,7 @@ def derivs(n, x, y):
 #"The function DERIVS calculates y' from x and y"
     dy=[0 for i in range(0,n+1)]
 
-    s2 = optimize.brentq(f_BM_Stixrude, 0.01, 6.0, args=(K_0[1], K_0_prime[1], theta_0[1], gamma_0[1], y[1], y[4]))
+    s2 = optimize.brentq(f_BM_Stixrude, 0.01, 5.0, args=(K_0[1], K_0_prime[1], theta_0[1], gamma_0[1], y[1], y[4]))
     V = s2 * V_0[1]
     rho = (1 / s2) * rho_0[1] 
     gamma_m = gamma_0[1] * (s2**beta)
@@ -206,7 +207,7 @@ Temperature = []
                                    
 x=r_ini; y=[0.0, p_ini, m_ini, g_ini, T_ini, q_ini]   # Sets Boundary Conditions
 
-while x < 6440.30:
+while x < r_ini+60:
         (x,y) = runkut(5, x, y, 1.0/N)
  
         print("mass is", y[2], "Kg")
@@ -214,7 +215,7 @@ while x < 6440.30:
         print("pressure is", y[1], "GPa")
         print("gravity is", y[3])
         print("Temperature is", y[4], "Kelvin")
-        print("Q is", (y[5] * 100))
+        print("Q is", (y[5]))
                        
         mass.append(y[2])
         radius.append(x)
@@ -254,7 +255,5 @@ plt.plot(radius, gravity, color='red')
 plt.xlabel('Radius (Km)')
 plt.ylabel('Gravity (m/s$^2$)')
 plt.show()
-    
 
-print("Done")
-
+print("MCB is Done")

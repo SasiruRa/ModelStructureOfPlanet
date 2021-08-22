@@ -38,13 +38,13 @@ beta = 1.1
 epsilon = 7.38 * (10**(-11))
 
 
-p_ini = 179.997        # Initial pressure at the core-mantle boundary (Pcmb at r_cmb)
-T_ini = 4282.46        # Initial temperature at the core-mantle boundary (Tcmb at r_cmb)
-m_ini = 3.08021548758e+24 
-density = 12170.4
-g_ini = 14.50
-r_ini = 3765.20
-q_ini = 0.00128
+p_ini = 167.13131827073997     
+T_ini = 3446.3638017467442
+m_ini = 1.9111927405786541e+24
+density = 12039.971767369172
+g_ini = 12.043933475773306
+r_ini = 3254.400000998136
+q_ini = 0.0010597639121178702
 
 T_0 = 300.0 # Reference temperature in kelvins
 n0 = 1.0
@@ -202,7 +202,7 @@ Temperature = []
                                    
 x=r_ini; y=[0.0, p_ini, m_ini, g_ini, T_ini, q_ini]   # Sets Boundary Conditions
 
-while x < 3915.20:
+while x < r_ini+150:
         (x,y) = runkut(5, x, y, 1.0/N)
  
         print("mass is", y[2], "Kg")
@@ -250,7 +250,5 @@ plt.plot(radius, gravity, color='red')
 plt.xlabel('Radius (Km)')
 plt.ylabel('Gravity (m/s$^2$)')
 plt.show()
-    
 
-print("Done")
-
+print("CMB is Done")

@@ -5,8 +5,14 @@ import numpy as np
 from scipy.constants import G
 from scipy import optimize
 
+MPlanet = (5.972e+24)*1.0
+CMF = 0.32
 
-# Bouchet EoS for Iron (Fe)
+p = 360.0  # Initial pressure at the centre of the planet in GPa (Pc at r = 0)
+T = 4000.0 # Initial temperature at the core in Kelvins (Tc at r = 0)
+
+N=10  # Step size
+
 
 K_0 = 253.84  # GPa
 K_0_prime = 4.719
@@ -17,6 +23,7 @@ theta_0 = 44.7  # (K)
 gamma_0 = 1.408
 gamma_inf = 0.827
 beta = 0.826
+
 
 n0 = 6.0
 a_0 = 2.121 * (10**-4.0)
@@ -31,23 +38,27 @@ epsilon = 7.38 * (10**(-11))
 
 
 def runkut(n, x, y, h):
-	"Advances the solution of diff eqn defined by derivs from x to x+h"
-	y0=y[:]
-	k1=derivs(n, x, y)
-	for i in range(1,n+1): y[i]=y0[i]+0.5*h*k1[i]
-	k2=derivs(n, x+0.5*h, y)
-	for i in range(1,n+1): y[i]=y0[i]+h*(0.2071067811*k1[i]+0.2928932188*k2[i])
-	k3=derivs(n, x+0.5*h, y)
-	for i in range(1,n+1): y[i]=y0[i]-h*(0.7071067811*k2[i]-1.7071067811*k3[i])
-	k4=derivs(n, x+h, y)
-	for i in range(1,n+1):
-	    a=k1[i]+0.5857864376*k2[i]+3.4142135623*k3[i]+k4[i]
-	    y[i]=y0[i]+0.16666666667*h*a
+#"Advances the solution of diff eqn defined by derivs from x to x+h"
+    y0=y[:]
+    k1=derivs(n, x, y)
+    for i in range(1,n+1): y[i]=y0[i]+0.5*h*k1[i]
+    k2=derivs(n, x+0.5*h, y)
+    for i in range(1,n+1): y[i]=y0[i]+h*(0.2071067811*k1[i]+0.2928932188*k2[i])
+    k3=derivs(n, x+0.5*h, y)
+    for i in range(1,n+1): y[i]=y0[i]-h*(0.7071067811*k2[i]-1.7071067811*k3[i])
+    k4=derivs(n, x+h, y)
+    for i in range(1,n+1):
+        a=k1[i]+0.5857864376*k2[i]+3.4142135623*k3[i]+k4[i]
+        y[i]=y0[i]+0.16666666667*h*a
 	
-	x+=h
-	return (x,y)
+    x+=h
+    return (x,y)
+
+
+
 
 "-----------------------------------Differential function----------------------------------------------------------"
+
 
 density = []
 
@@ -152,13 +163,13 @@ def p_th(x, T):
 
 
 "--------------------------Solve the differential equations---------------------------------------------------------"
-
-p = 450.0  # Initial pressure at the centre of the planet in GPa (Pc at r = 0)
-T = 4500.0 # Initial temperature at the core in Kelvins (Tc at r = 0)
     
 def derivs(n, x, y):
-    "The function DERIVS calculates y from x and y"
+        
+
+    "The function DERIVS calculates y' from x and y"
     dy=[0 for i in range(0,n+1)]
+	
 
     h_x=0.01
     s = optimize.brentq(f_Bouchet, 0.1, 100000000.0, args=(5.0/3.0, 1.0/3.0, K_0, K_0_prime, y[4], y[1]))
@@ -190,8 +201,6 @@ def derivs(n, x, y):
 
 "----------------------------------End solving-----------------------------------------------------------------------"  
 
-N=10  # Step size
-
 #x=r
 #m=y[2] mass at centre is zero 
 # Radius r is in Km (IMPORTANT)
@@ -202,12 +211,15 @@ pressure = []
 gravity = []
 Temperature = []
 
-q_i = 0.0000001                                   
-x=0.000001; y=[0.0, p, 0.0, 0.0, T, q_i]   # Sets Boundary Conditions
+
+q_i = 0.0000001
+m_T = 0.0                                  
+x=0.000001; y=[0, p, 0.0, 0.0, T, q_i]   # Sets Boundary Conditions
 
 
-while y[2] < ((5.972e+24)*0.32):
+while y[2] < CMF*MPlanet:
     (x,y) = runkut(5, x, y, 1.0/N)
+   
          
     print("mass is", y[2], "Kg") 
     print("radius is", x, "Km")
@@ -215,13 +227,14 @@ while y[2] < ((5.972e+24)*0.32):
     print("gravity is", y[3])
     print("Temperature is", y[4], "Kelvin")
     print("Q is", (y[5]))
+  
                        
     mass.append(y[2])
     radius.append(x)
     pressure.append(y[1])
     gravity.append(y[3])
     Temperature.append(y[4])
-
+ 
 
 import csv
 with open('Proxima_Core_1.txt', 'w+') as x:
@@ -232,28 +245,31 @@ with open('Proxima_Core_1.txt', 'w+') as x:
 with open('Proxima_Core_2.txt', 'w+') as x:
     
     writer = csv.writer(x, delimiter='\t')
-    writer.writerows(zip(mass, gravity, radius))
+    writer.writerows(zip(mass, gravity, density))
 
-with open('Proxima_Core_3.txt', 'w+') as x:
+# with open('Proxima_Core_3.txt', 'w+') as x:
     
-    writer = csv.writer(x, delimiter='\t')
-    writer.writerows(zip(density))
+#     writer = csv.writer(x, delimiter='\t')
+#     writer.writerows(zip(density))
 
-
+file = open('Q.txt', 'w+')
+file.write(str(y[5]))
+file.close()
         
-plt.plot(radius, pressure, color='blue')
-plt.xlabel('Radius (Km)')
-plt.ylabel('Pressure (GPa)')
-plt.show()
+# plt.plot(radius, pressure, color='blue')
+# plt.xlabel('Radius (Km)')
+# plt.ylabel('Pressure (GPa)')
+# plt.show()
 
-plt.plot(radius, gravity, color='green')
-plt.xlabel('Radius (Km)')
-plt.ylabel('Gravity (m/s$^2$)')
-plt.show()
+# plt.plot(radius, gravity, color='green')
+# plt.xlabel('Radius (Km)')
+# plt.ylabel('Gravity (m/s$^2$)')
+# plt.show()
 
-plt.plot(radius, Temperature, color='red')
-plt.xlabel('Radius (Km)')
-plt.ylabel('Temperature (K)')
-plt.show()
+# plt.plot(radius, Temperature, color='red')
+# plt.xlabel('Radius (Km)')
+# plt.ylabel('Temperature (K)')
+# plt.show()
+
     
 print("Core is Done")

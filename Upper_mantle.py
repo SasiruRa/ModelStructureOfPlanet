@@ -35,14 +35,13 @@ theta_0 = [887.96, 830.1]  # (K)
 gamma_0 = [1.584, 1.127]
 beta = 2.426 
 
-
-p_ini = 22.05     # Initial pressure at the core-mantle boundary (Pcmb at r_cmb)
-T_ini = 1905.84    # Initial temperature at the core-mantle boundary (Tcmb at r_cmb)
-m_ini = 6.69525351636e+24
-density = 4577.62
-g_ini =  12.34
-r_ini = 6017.20
-q_ini = 0.0010874
+p_ini = 22.896231883758734
+T_ini = 1543.1278201775876
+m_ini = 5.251016084492706e+24 
+density = 4596.843637349422
+g_ini = 10.686616061110069
+r_ini = 5726.700001003303
+q_ini = 0.001017364478657561
 
 T_0 = 300.0 # Reference temperature in kelvins
 n0 = 1.0
@@ -237,7 +236,7 @@ while y[1] > 5.0:
     print("pressure is", y[1], "GPa")
     print("gravity is", y[3])
     print("Temperature is", y[4], "Kelvin")
-    print("Q is", (y[5] * 100))
+    print("Q is", (y[5]))
                        
     mass.append(y[2])
     radius.append(x)
@@ -277,6 +276,5 @@ plt.xlabel('Radius (Km)')
 plt.ylabel('Gravity (m/s$^2$)')
 plt.show()
     
-
-print("Done")
+print("UM is Done")
 

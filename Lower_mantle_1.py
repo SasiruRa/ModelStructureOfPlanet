@@ -38,12 +38,13 @@ beta = 1.1
 #z = 26.0  # Atomic number of iron
 
 
-p_ini = 166.912        # Initial pressure at the core-mantle boundary (Pcmb at r_cmb)
-T_ini = 2701.58        # Initial temperature at the core-mantle boundary (Tcmb at r_cmb)
-m_ini = 3.24957080446e+24
-density = 6049.65
-g_ini = 14.14
-r_ini = 3915.30
+p_ini = 156.4161151942218
+T_ini = 2138.74456959167
+m_ini = 2.0368369290186046e+24
+density = 5976.338934114652
+g_ini = 11.728846613998583
+r_ini = 3404.5000009979995
+q_ini = 0.0010320389422316524
 
 T_0 = 300.0 # Reference temperature in kelvins
 n0 = 1.0
@@ -212,7 +213,7 @@ while y[1] > 130.0:
         print("pressure is", y[1], "GPa")
         print("gravity is", y[3])
         print("Temperature is", y[4], "Kelvin")
-        print("Q is", (y[5] * 100.0))
+        print("Q is", (y[5]))
                        
         mass.append(y[2])
         radius.append(x)
@@ -254,5 +255,5 @@ plt.ylabel('Gravity (m/s$^2$)')
 plt.show()
     
 
-print("Done")
+print("LM 1 is Done")
 

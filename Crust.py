@@ -35,21 +35,22 @@ theta_0 = [887.96, 765.067]  # (K)
 gamma_0 = [1.584, 0.996]
 beta = 2.382
 
-p_ini = 2.900      # Initial pressure at the core-mantle boundary (Pcmb at r_cmb)
-T_ini = 1104.99    # Initial temperature at the core-mantle boundary (Tcmb at r_cmb)
-m_ini = 7.46092806819e+24
-density = 3471.62
-g_ini = 11.99
-r_ini = 6440.30
-q_ini = 0.0010560
+p_ini = 2.7996055741679533
+T_ini = 583.1630814507754
+m_ini = 6.104940882612361e+24
+density = 3475.849378679565
+g_ini = 10.465159378480443
+r_ini = 6239.80000100517
+q_ini = 0.000985730176891937
 
 T_0 = 300.0 # Reference temperature in kelvins
 n0 = 1.0
+
 R = 8.314
 epsilon = 7.38 * (10**(-11))
 
 density = []
-kappa = 6.000
+kappa = 7.000
 
 
 def integrate(f, a, b, n):
@@ -204,7 +205,7 @@ Temperature = []
                                    
 x=r_ini; y=[0.0, p_ini, m_ini, g_ini, T_ini, q_ini]   # Sets Boundary Conditions
 
-while x < 6490.30:
+while x < r_ini+40:
         (x,y) = runkut(5, x, y, 1.0/N)
  
         print("mass is", y[2], "Kg") 
@@ -212,7 +213,7 @@ while x < 6490.30:
         print("pressure is", y[1], "GPa")
         print("gravity is", y[3])
         print("Temperature is", y[4], "Kelvin")
-        print("Q is", (y[5] * 100))
+        print("Q is", (y[5]))
                        
         mass.append(y[2])
         radius.append(x)
@@ -254,5 +255,5 @@ plt.ylabel('Gravity (m/s$^2$)')
 plt.show()
     
 
-print("Done")
+print("Crust is Done")
 
