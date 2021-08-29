@@ -205,8 +205,9 @@ Temperature = []
 q_i = 0.0000001                                   
 x=0.000001; y=[0.0, p, 0.0, 0.0, T, q_i]   # Sets Boundary Conditions
 
-
-while y[2] < ((5.972e+24)*0.32):
+ms=1.911187753123466e+24
+#ms=(5.972e+24)*0.32
+while y[2] < ms:
     (x,y) = runkut(5, x, y, 1.0/N)
          
     print("mass is", y[2], "Kg") 
