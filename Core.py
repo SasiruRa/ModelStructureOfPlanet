@@ -153,8 +153,8 @@ def p_th(x, T):
 
 "--------------------------Solve the differential equations---------------------------------------------------------"
 
-p = 450.0  # Initial pressure at the centre of the planet in GPa (Pc at r = 0)
-T = 4500.0 # Initial temperature at the core in Kelvins (Tc at r = 0)
+p = 380.0  # Initial pressure at the centre of the planet in GPa (Pc at r = 0)
+T = 3800.0 # Initial temperature at the core in Kelvins (Tc at r = 0)
     
 def derivs(n, x, y):
     "The function DERIVS calculates y from x and y"
@@ -205,9 +205,9 @@ Temperature = []
 q_i = 0.0000001                                   
 x=0.000001; y=[0.0, p, 0.0, 0.0, T, q_i]   # Sets Boundary Conditions
 
-ms=1.911187753123466e+24
+#ms=1.911187753123466e+24
 #ms=(5.972e+24)*0.32
-while y[2] < ms:
+while y[2] <1.1944e+24 :
     (x,y) = runkut(5, x, y, 1.0/N)
          
     print("mass is", y[2], "Kg") 

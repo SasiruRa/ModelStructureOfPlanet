@@ -35,13 +35,13 @@ theta_0 = [887.96, 765.067]  # (K)
 gamma_0 = [1.584, 0.996]
 beta = 2.382
 
-p_ini = 2.7996055741679533
-T_ini = 583.1630814507754
-m_ini = 6.104940882612361e+24
-density = 3475.849378679565
-g_ini = 10.465159378480443
-r_ini = 6239.80000100517
-q_ini = 0.000985730176891937
+p_ini = 2.9250647443163458
+T_ini = 497.45752585224375
+m_ini = 6.039718407420916e+24
+density = 3480.004606261863
+g_ini = 9.86981951712593
+r_ini = 6390.600001005719
+q_ini = 0.0009480102944258964
 
 T_0 = 300.0 # Reference temperature in kelvins
 n0 = 1.0
@@ -205,7 +205,7 @@ Temperature = []
                                    
 x=r_ini; y=[0.0, p_ini, m_ini, g_ini, T_ini, q_ini]   # Sets Boundary Conditions
 
-while x < r_ini+40:
+while x < r_ini+ 34:
         (x,y) = runkut(5, x, y, 1.0/N)
  
         print("mass is", y[2], "Kg") 
